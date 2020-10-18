@@ -3,8 +3,7 @@ package com.gopaljdbc.gopaljdbcprg.controller;
 import com.gopaljdbc.gopaljdbcprg.dao.EmployeeDao;
 import com.gopaljdbc.gopaljdbcprg.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +16,25 @@ public class EmployeeController {
     @GetMapping("/getemployees")
     public List<Employee> getEmployee(){
         return employeeDao.getEmployeeData();
+    }
+
+    @PostMapping(value="/save")
+    public String saveEmployee(@RequestBody Employee employee){
+        return employeeDao.insertEmployee(employee);
+    }
+
+    @GetMapping(value="/getempbyid/{id}")
+    public Employee getEmpById(@PathVariable Integer id){
+        return employeeDao.getEmployeeById(id);
+    }
+
+    @DeleteMapping(value="/delete/{id}")
+    public String deleteEmployee(@PathVariable Integer id){
+        return employeeDao.deleteEmpById(id);
+    }
+
+    @PutMapping(value="/update")
+    public String updateEmp(@RequestBody Employee employee){
+        return employeeDao.updateEmployee(employee);
     }
 }

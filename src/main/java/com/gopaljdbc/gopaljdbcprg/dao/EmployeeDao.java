@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Types;
 import java.util.List;
 
 @Repository
@@ -22,5 +23,43 @@ public class EmployeeDao implements EmployeeRepository {
         List<Employee> list=jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper(Employee.class));
         return list;
+    }
+
+    @Override
+    public String insertEmployee(Employee employee) {
+        String sql="insert into employee values(?,?,?)";
+        jdbcTemplate.update(sql,new Object[]{employee.getId(),
+                employee.getName(),employee.getCity()});
+        return "Employee added successfully";
+    }
+
+    @Override
+    public Employee getEmployeeById(Integer id) {
+        String sql="select * from employee where id=?";
+        Employee employee=jdbcTemplate.queryForObject(sql,new Object[]{id},
+                new BeanPropertyRowMapper<>(Employee.class));
+        return employee;
+    }
+
+    @Override
+    public String deleteEmpById(Integer id) {
+
+        String sql="delete from employee where id=?";
+        jdbcTemplate.update(sql,new Object[]{id});
+        return "Employee Deleted";
+    }
+
+    @Override
+    public String updateEmployee(Employee employee) {
+        String sql="update employee set name=?, city=? where id=?";
+        System.out.println("Id is: "+employee.getId());
+        int checkValue=jdbcTemplate.update(sql,new Object[]{employee.getName(),
+                employee.getCity(),employee.getId()},new int[]{
+                        Types.VARCHAR,Types.VARCHAR,Types.INTEGER});
+        System.out.println("hiiiiiiii "+checkValue);
+        if(checkValue==1) {
+            return "Employee Updated";
+        }
+        return "Employee not updated";
     }
 }
