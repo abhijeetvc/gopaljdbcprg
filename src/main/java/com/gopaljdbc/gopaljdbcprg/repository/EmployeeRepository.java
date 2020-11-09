@@ -3,6 +3,7 @@ package com.gopaljdbc.gopaljdbcprg.repository;
 import com.gopaljdbc.gopaljdbcprg.model.Employee;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EmployeeRepository {
 
@@ -15,4 +16,6 @@ public interface EmployeeRepository {
     String deleteEmpById(Integer id);
 
     String updateEmployee(Employee employee);
+
+    List<Map<String,Object>> getEmployeeAndDepartment();
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EmployeeController {
@@ -37,4 +38,14 @@ public class EmployeeController {
     public String updateEmp(@RequestBody Employee employee){
         return employeeDao.updateEmployee(employee);
     }
+
+    @GetMapping("/getjoindata")
+    public List<Map<String,Object>> getList(){
+        return employeeDao.getEmployeeAndDepartment();
+    }
 }
+
+// a) Insert employee with reference of department
+// b) Check for department name not coming in the response
+// c) insert into department and employee based on the check of the department existing
+//// and not existing case

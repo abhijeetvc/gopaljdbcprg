@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.Types;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EmployeeDao implements EmployeeRepository {
@@ -61,5 +62,13 @@ public class EmployeeDao implements EmployeeRepository {
             return "Employee Updated";
         }
         return "Employee not updated";
+    }
+
+    @Override
+    public List<Map<String, Object>> getEmployeeAndDepartment() {
+        String sql="select a.id,a.name,a.city,b.name " +
+                "from employee a,department b where a.dept_id=b.id";
+        List<Map<String,Object>> list=jdbcTemplate.queryForList(sql);
+        return list;
     }
 }
